@@ -52,6 +52,19 @@ Server running on port 3000
 Then open your browser and visit:
 http://localhost:3000
 
+version: 0.2
+phases:
+  install:
+    commands:
+      - npm install
+  build:
+    commands:
+      - echo "Build completed"
+artifacts:
+  files:
+    - '**/*'
+
+
 STEP 2 — Connect to EC2 from Mac Terminal
 chmod 700 your-key.pem
 ssh -i deploy.pem ec2-user@<your-ec2-public-ip>
