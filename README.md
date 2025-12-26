@@ -11,38 +11,60 @@ A demo Node.js application deployed using AWS CodePipeline, CodeBuild, and CodeD
 STEP 1 — Launch EC2
 
 Open AWS Console
-
 Search EC2
-
 Click Launch Instance
 
 Choose:
-
-Amazon Linux 2 (recommended)
-
+Amazon Linux 2
 Instance type: t2.micro (Free Tier eligible)
-
-Create or select a Key Pair (Download .pem)
+Create or select a Key Pair (Deploy .pem)
 
 Network settings:
-
 Allow SSH
-
 Allow HTTP
-
 Click Launch
 
 STEP 2 — Connect to EC2 from Mac Terminal
-chmod 400 your-key.pem
-ssh -i your-key.pem ec2-user@<your-ec2-public-ip>
-STEP 3 — Install Node & CodeDeploy agen
+chmod 700 your-key.pem
+ssh -i deploy.pem ec2-user@<your-ec2-public-ip>
+STEP 3 — Install Node & CodeDeploy agents
 sudo yum update -y
-sudo yum install nodejs -y
+sudo yum install nodejs -y   #installing node js
 
 # Install CodeDeploy agent
-sudo yum install ruby wget -y
-cd /home/ec2-user
-wget https://aws-codedeploy-ap-south-1.s3.amazonaws.com/latest/install
+sudo yum install ruby wget -y # Use: Installs two system packages on Amazon Linux using the YUM package manager                                                               #ruby → required by the CodeDeploy installer script
+                              #wget → a tool to download files from the internet
+                              # The CodeDeploy installer won’t run unless Ruby exists
+                               
+cd /home/ec2-user             
+wget https://aws-codedeploy-ap-south-1.s3.amazonaws.com/latest/install   #Downloads the latest CodeDeploy agent installer script from AWS’s S3                                                                            bucket into your EC2 server.
 chmod +x ./install
-sudo ./install auto
-sudo service codedeploy-agent start
+sudo ./install auto                   #Runs the installer script and installs the CodeDeploy agent.
+sudo service codedeploy-agent start   #Starts the installed CodeDeploy agent
+sudo service codedeploy-agent status   #confirms if it is active
+
+STEP 4 — Create IAM Role for EC2
+Go to IAM
+Click Roles → Create Role
+Choose AWS Service → EC2
+
+Attach policies:
+AmazonS3FullAccess
+AWSCodeDeployRole
+Name it: EC2-CodeDeploy-Role #ggive whatever name you want
+Save
+
+Now attach this role to your EC2 instance:
+EC2 → Instance → Actions → Security → Modify IAM role → Select the role
+
+
+STEP 5 — Create CodeBuild Project
+Open AWS Console → Search CodeBuild
+Click Create build project
+Name: aws-cicd-demo-build
+Source: GitHub → Connect your repo
+
+Environment:
+OS: Amazon Linux 2
+Runtime: Standard
+Buildspec: choose Insert build commands
