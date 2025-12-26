@@ -24,6 +24,34 @@ Allow SSH
 Allow HTTP
 Click Launch
 
+STEP 3 — Write the web application code
+
+This is the step where you actually coded the app.
+In VS Code:
+Click New File
+Name it: server.js
+Paste this code inside it:
+const http = require('http');
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Hello from AWS CI/CD Demo!');
+});
+const PORT = 3000;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+#Initialize npm (for Node project)
+
+#This creates package.json which describes your project settings.
+
+npm init -y
+node server.js
+If it prints:
+Server running on port 3000
+Then open your browser and visit:
+http://localhost:3000
+
 STEP 2 — Connect to EC2 from Mac Terminal
 chmod 700 your-key.pem
 ssh -i deploy.pem ec2-user@<your-ec2-public-ip>
