@@ -1,0 +1,22 @@
+{
+  "name": "aws-ci-cd-deployment-to-ec2",
+  "version": "1.0.0",
+  "description": "A demo Node.js application deployed using AWS CodePipeline, CodeBuild, and CodeDeploy on an EC2 instance.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hudakv/AWS-CI-CD-deployment-to-EC2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Hudakv/AWS-CI-CD-deployment-to-EC2/issues"
+  },
+  "homepage": "https://github.com/Hudakv/AWS-CI-CD-deployment-to-EC2#readme"
+}
